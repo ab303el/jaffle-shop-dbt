@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: orders
+    description: "Final fact table for sales orders"
+    columns:
+      - name: order_id
+        description: "Primary key for the orders table"
+        tests:
+          - unique
+          - not_null
+      - name: order_total
+        description: "Total amount of the order"
+        tests:
+          - not_null

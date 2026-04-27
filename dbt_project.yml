@@ -1,0 +1,33 @@
+name: 'jaffle_shop'
+version: '1.0.0'
+profile: 'jaffle_shop'
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+seeds:
+  jaffle_shop:
+    +schema: raw  # This sends all seeds to sales_raw
+    raw_stores:
+      +column_types:
+        tax_rate: "decimal"
+
+models:
+  jaffle_shop:
+    +static_analysis: strict
+
+    # Everything in the 'staging' folder goes to sales_silver
+    staging:
+      +schema: silver
+      +materialized: view
+
+    # Everything in the 'marts' folder goes to sales_gold
+    marts:
+      +schema: gold
+      +materialized: table
+
